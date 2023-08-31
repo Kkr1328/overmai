@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 import { COLOR } from '@/constant/COLOR';
 import { LANES } from '@/constant/ENTITY';
 import { SPACE } from '@/constant/SPACE';
@@ -29,9 +31,19 @@ export default function CarInfo(props: CarInfoProps) {
 			setLane(newLane);
 		}
 	};
+
 	return (
 		<Stack gap={SPACE[8]} alignItems="start">
 			<Stack direction="row" gap={SPACE[8]}>
+				<Box width={60} height={10}>
+					<Image
+						src={`/${props.name}.svg`}
+						alt={props.name}
+						style={{ rotate: `90deg`, translate: '20px -5px' }}
+						width={20}
+						height={80}
+					/>
+				</Box>
 				<Typography
 					fontWeight="bold"
 					style={{ color: COLOR.BLACK, lineHeight: 2.5 }}>

@@ -1,17 +1,7 @@
 import { Fragment } from 'react';
 import Image from 'next/image';
 
-import {
-	AppBar,
-	Box,
-	Card,
-	Divider,
-	FormControlLabel,
-	Grid,
-	Stack,
-	Switch,
-	Typography,
-} from '@mui/material';
+import { AppBar, Box, Card, Grid, Stack, Typography } from '@mui/material';
 import DirectionsCarRoundedIcon from '@mui/icons-material/DirectionsCarRounded';
 
 import CarInfo from '@/components/CarInfo';
@@ -61,10 +51,12 @@ export default function Home() {
 										margin: 'auto',
 									}}
 								/>
-								<Image src="/car1.svg" alt="car1" width={20} height={80} />
-								<Image src="/car2.svg" alt="car2" width={20} height={80} />
-								<Image src="/car3.svg" alt="car3" width={20} height={80} />
-								<Image src="/car4.svg" alt="car4" width={20} height={80} />
+								<Stack direction="row" gap={SPACE[8]}>
+									<Image src="/car1.svg" alt="car1" width={20} height={80} />
+									<Image src="/car2.svg" alt="car2" width={20} height={80} />
+									<Image src="/car3.svg" alt="car3" width={20} height={80} />
+									<Image src="/car4.svg" alt="car4" width={20} height={80} />
+								</Stack>
 							</Grid>
 							<Grid item xs={6}>
 								<Stack spacing={SPACE[16]} alignItems="start">
