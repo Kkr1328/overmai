@@ -1,10 +1,8 @@
 'use client';
 
+import * as React from 'react';
 import Image from 'next/image';
 
-import { COLOR } from '@/constant/COLOR';
-import { LANES } from '@/constant/ENTITY';
-import { SPACE } from '@/constant/SPACE';
 import {
 	Box,
 	FormControlLabel,
@@ -12,32 +10,40 @@ import {
 	Switch,
 	ToggleButton,
 	ToggleButtonGroup,
+	Typography,
 } from '@mui/material';
-import Typography from '@mui/material/Typography/Typography';
-import * as React from 'react';
+
+import { COLOR, SPACE } from '@/constant/CONST';
+import { CarType, LANES, LaneType } from '@/constant/ENTITY';
 
 interface CarInfoProps {
+	value: CarType;
 	name: string;
 }
 
 export default function CarInfo(props: CarInfoProps) {
-	const [lane, setLane] = React.useState<string>(LANES[0]);
+	const [isEnable, setIsEnable] = React.useState<boolean>(false);
+	const [lane, setLane] = React.useState<LaneType>('LANE1');
 
-	const handlelane = (
-		event: React.MouseEvent<HTMLElement>,
-		newLane: string
-	) => {
-		if (newLane) {
-			setLane(newLane);
-		}
+	const handleIsEnableChange = (isCurrentEnable: boolean) => {
+		setIsEnable(isCurrentEnable);
+		console.log(props.name, '| Enable :', isCurrentEnable, ', Lane :', lane);
+		// sent "Turn on/off" API here
+	};
+
+	const handleLaneChange = (currentLane: LaneType) => {
+		setLane(currentLane);
+		console.log(props.name, '| Enable :', isEnable, ', Lane :', currentLane);
+		// sent "Change lane" API here
 	};
 
 	return (
 		<Stack gap={SPACE[8]} alignItems="start">
 			<Stack direction="row" gap={SPACE[8]}>
+				{/* Car Icon */}
 				<Box width={60} height={10}>
 					<Image
-						src={`/${props.name}.svg`}
+						src={`/${props.value}.svg`}
 						alt={props.name}
 						style={{ rotate: `90deg`, translate: '20px -5px' }}
 						width={20}
@@ -49,15 +55,23 @@ export default function CarInfo(props: CarInfoProps) {
 					style={{ color: COLOR.BLACK, lineHeight: 2.5 }}>
 					{props.name}
 				</Typography>
-				<FormControlLabel control={<Switch />} label={`Enable ${props.name}`} />
+				<FormControlLabel
+					control={
+						<Switch
+							checked={isEnable}
+							onChange={(event) => handleIsEnableChange(event.target.checked)}
+						/>
+					}
+					label={`Enable ${props.name}`}
+				/>
 			</Stack>
 			<ToggleButtonGroup
 				color="primary"
 				exclusive
 				value={lane}
-				onChange={handlelane}>
-				{LANES.map((lane) => (
-					<ToggleButton value={lane}>{lane}</ToggleButton>
+				onChange={(event, lane) => lane && handleLaneChange(lane)}>
+				{Object.entries(LANES).map(([value, name]) => (
+					<ToggleButton value={value}>{name}</ToggleButton>
 				))}
 			</ToggleButtonGroup>
 		</Stack>

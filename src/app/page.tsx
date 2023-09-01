@@ -5,10 +5,8 @@ import { AppBar, Box, Card, Grid, Stack, Typography } from '@mui/material';
 import DirectionsCarRoundedIcon from '@mui/icons-material/DirectionsCarRounded';
 
 import CarInfo from '@/components/CarInfo';
-
-import { COLOR } from '@/constant/COLOR';
-import { SPACE } from '@/constant/SPACE';
-import { CARS } from '@/constant/ENTITY';
+import { COLOR, SPACE } from '@/constant/CONST';
+import { CARS, CarType } from '@/constant/ENTITY';
 
 export default function Home() {
 	return (
@@ -60,8 +58,8 @@ export default function Home() {
 							</Grid>
 							<Grid item xs={6}>
 								<Stack spacing={SPACE[16]} alignItems="start">
-									{CARS.map((car) => (
-										<CarInfo name={car} />
+									{Object.entries(CARS).map(([value, name]) => (
+										<CarInfo value={value as CarType} name={name} />
 									))}
 								</Stack>
 							</Grid>
