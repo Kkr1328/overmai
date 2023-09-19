@@ -98,7 +98,7 @@ export default function Map() {
 				onChange={handleSliderChange}
 				aria-labelledby="input-slider"
 			/>
-			<Box className="flex justify-center">
+			<Box className="flex justify-center" height={LENGTH.MAP_HEIGHT}>
 				<Image
 					className="absolute"
 					src="/path1.svg"
