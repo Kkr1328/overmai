@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 
 import { CarType, LANES, LaneType } from '@/constant/ENTITY';
+import { LENGTH } from '@/constant/CONST';
 
 interface CarControllerProps {
 	value: CarType;
@@ -45,8 +46,8 @@ export default function CarController(props: CarControllerProps) {
 						src={`/${props.value}.svg`}
 						alt={props.name}
 						style={{ rotate: `90deg`, translate: '20px -5px' }}
-						width={20}
-						height={80}
+						width={LENGTH.CAR_WIDTH}
+						height={LENGTH.CAR_HEIGHT}
 					/>
 				</Box>
 				<Typography
@@ -71,7 +72,9 @@ export default function CarController(props: CarControllerProps) {
 				value={lane}
 				onChange={(event, lane) => lane && handleLaneChange(lane)}>
 				{Object.entries(LANES).map(([value, name]) => (
-					<ToggleButton value={value}>{name}</ToggleButton>
+					<ToggleButton value={value} key={name}>
+						{name}
+					</ToggleButton>
 				))}
 			</ToggleButtonGroup>
 		</Stack>
