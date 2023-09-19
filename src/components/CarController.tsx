@@ -13,15 +13,14 @@ import {
 	Typography,
 } from '@mui/material';
 
-import { COLOR, SPACE } from '@/constant/CONST';
 import { CarType, LANES, LaneType } from '@/constant/ENTITY';
 
-interface CarInfoProps {
+interface CarControllerProps {
 	value: CarType;
 	name: string;
 }
 
-export default function CarInfo(props: CarInfoProps) {
+export default function CarController(props: CarControllerProps) {
 	const [isEnable, setIsEnable] = React.useState<boolean>(false);
 	const [lane, setLane] = React.useState<LaneType>('LANE1');
 
@@ -38,10 +37,10 @@ export default function CarInfo(props: CarInfoProps) {
 	};
 
 	return (
-		<Stack gap={SPACE[8]} alignItems="start">
-			<Stack direction="row" gap={SPACE[8]}>
+		<Stack className="gap-8" alignItems="start">
+			<Stack direction="row" className="gap-8">
 				{/* Car Icon */}
-				<Box width={60} height={10}>
+				<Box className="w-[60px] h-[10px]">
 					<Image
 						src={`/${props.value}.svg`}
 						alt={props.name}
@@ -52,7 +51,8 @@ export default function CarInfo(props: CarInfoProps) {
 				</Box>
 				<Typography
 					fontWeight="bold"
-					style={{ color: COLOR.BLACK, lineHeight: 2.5 }}>
+					className="text-black"
+					style={{ lineHeight: 2.5 }}>
 					{props.name}
 				</Typography>
 				<FormControlLabel
