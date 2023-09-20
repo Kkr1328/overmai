@@ -19,74 +19,52 @@ export default function Map() {
 
 	const position = (lane: number): Position => {
 		const radius_length =
-			(LENGTH.MAP_WIDTH - (2 * lane - 1) * LENGTH.LANE_WIDTH) / 2;
+			(LENGTH.MAP_WIDTH - (9 - 2 * lane) * LENGTH.LANE_WIDTH) / 2;
 		const straight_length = LENGTH.MAP_HEIGHT - LENGTH.MAP_WIDTH;
-		const curve_length = (Math.PI * radius_length) / 2;
-		const distance = (value / 100) * (2 * straight_length + 4 * curve_length);
+		const curve_length = Math.PI * radius_length;
+		const distance =
+			(1 - value / 100) * (2 * straight_length + 2 * curve_length);
 		const start_y_pos = (LENGTH.MAP_HEIGHT - LENGTH.CAR_HEIGHT) / 2;
 
 		if (distance < straight_length / 2) {
 			return {
 				x_pos: -radius_length,
 				y_pos: start_y_pos - distance,
-				degree: 0,
+				degree: 180,
 			};
 		} else if (distance < straight_length / 2 + curve_length) {
-			const degree = (90 * (distance - straight_length / 2)) / curve_length;
+			const degree = (180 * (distance - straight_length / 2)) / curve_length;
 			const rad = (degree / 180) * Math.PI;
 			return {
 				x_pos: -Math.cos(rad) * radius_length,
 				y_pos:
 					start_y_pos - straight_length / 2 - Math.sin(rad) * radius_length,
-				degree: degree,
+				degree: degree + 180,
 			};
-		} else if (distance < straight_length / 2 + 2 * curve_length) {
-			const degree =
-				90 +
-				(90 * (distance - straight_length / 2 - curve_length)) / curve_length;
-			const rad = ((180 - degree) / 180) * Math.PI;
-			return {
-				x_pos: Math.cos(rad) * radius_length,
-				y_pos:
-					start_y_pos - straight_length / 2 - Math.sin(rad) * radius_length,
-				degree: degree,
-			};
-		} else if (distance < (3 * straight_length) / 2 + 2 * curve_length) {
+		} else if (distance < (3 * straight_length) / 2 + curve_length) {
 			return {
 				x_pos: radius_length,
-				y_pos: start_y_pos + distance - straight_length - 2 * curve_length,
-				degree: 180,
+				y_pos: start_y_pos + distance - straight_length - curve_length,
+				degree: 0,
 			};
-		} else if (distance < (3 * straight_length) / 2 + 3 * curve_length) {
+		} else if (distance < (3 * straight_length) / 2 + 2 * curve_length) {
 			const degree =
 				180 +
-				(90 * (distance - (3 * straight_length) / 2 - 2 * curve_length)) /
+				(180 * (distance - (3 * straight_length) / 2 - curve_length)) /
 					curve_length;
 			const rad = ((degree - 180) / 180) * Math.PI;
 			return {
 				x_pos: Math.cos(rad) * radius_length,
 				y_pos:
 					start_y_pos + straight_length / 2 + Math.sin(rad) * radius_length,
-				degree: degree,
-			};
-		} else if (distance < (3 * straight_length) / 2 + 4 * curve_length) {
-			const degree =
-				270 +
-				(90 * (distance - (3 * straight_length) / 2 - 3 * curve_length)) /
-					curve_length;
-			const rad = ((360 - degree) / 180) * Math.PI;
-			return {
-				x_pos: -Math.cos(rad) * radius_length,
-				y_pos:
-					start_y_pos + straight_length / 2 + Math.sin(rad) * radius_length,
-				degree: degree,
+				degree: degree + 180,
 			};
 		} else {
 			return {
 				x_pos: -radius_length,
 				y_pos:
-					start_y_pos - distance + (4 * straight_length) / 2 + 4 * curve_length,
-				degree: 0,
+					start_y_pos - distance + (4 * straight_length) / 2 + 2 * curve_length,
+				degree: 180,
 			};
 		}
 	};
