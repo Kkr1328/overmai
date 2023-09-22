@@ -5,15 +5,15 @@ import Image from 'next/image';
 
 import {
 	Box,
+	Button,
+	ButtonGroup,
 	FormControlLabel,
 	Stack,
 	Switch,
-	ToggleButton,
-	ToggleButtonGroup,
 	Typography,
 } from '@mui/material';
 
-import { CarType, LANES, LaneType } from '@/constant/ENTITY';
+import { CarType, LaneType } from '@/constant/ENTITY';
 import { LENGTH } from '@/constant/CONST';
 
 interface CarControllerProps {
@@ -23,19 +23,19 @@ interface CarControllerProps {
 
 export default function CarController(props: CarControllerProps) {
 	const [isEnable, setIsEnable] = React.useState<boolean>(false);
-	const [lane, setLane] = React.useState<LaneType>('LANE1');
+	// const [lane, setLane] = React.useState<LaneType>('LANE1');
 
 	const handleIsEnableChange = (isCurrentEnable: boolean) => {
 		setIsEnable(isCurrentEnable);
-		console.log(props.name, '| Enable :', isCurrentEnable, ', Lane :', lane);
+		// console.log(props.name, '| Enable :', isCurrentEnable, ', Lane :', lane);
 		// sent "Turn on/off" API here
 	};
 
-	const handleLaneChange = (currentLane: LaneType) => {
-		setLane(currentLane);
-		console.log(props.name, '| Enable :', isEnable, ', Lane :', currentLane);
-		// sent "Change lane" API here
-	};
+	// const handleLaneChange = (currentLane: LaneType) => {
+	// 	setLane(currentLane);
+	// 	console.log(props.name, '| Enable :', isEnable, ', Lane :', currentLane);
+	// 	// sent "Change lane" API here
+	// };
 
 	return (
 		<Stack className="gap-8" alignItems="start">
@@ -66,7 +66,7 @@ export default function CarController(props: CarControllerProps) {
 					label={`Enable ${props.name}`}
 				/>
 			</Stack>
-			<ToggleButtonGroup
+			{/* <ToggleButtonGroup
 				color="primary"
 				exclusive
 				value={lane}
@@ -76,7 +76,11 @@ export default function CarController(props: CarControllerProps) {
 						{name}
 					</ToggleButton>
 				))}
-			</ToggleButtonGroup>
+			</ToggleButtonGroup> */}
+			<ButtonGroup variant="outlined" aria-label="outlined button group">
+				<Button>Left</Button>
+				<Button>Right</Button>
+			</ButtonGroup>
 		</Stack>
 	);
 }
