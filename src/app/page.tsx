@@ -1,3 +1,5 @@
+'use client';
+
 import { Fragment } from 'react';
 import Image from 'next/image';
 import { io } from 'socket.io-client';
@@ -10,6 +12,14 @@ import Carcontroller from '@/components/CarController';
 import { CARS, CarType } from '@/constant/ENTITY';
 
 const socket = io('http://localhost:8000', { transports: ['websocket'] });
+
+socket.on('connect', () => {
+	console.log('Connected to server');
+});
+
+socket.on('error', (error) => {
+	console.error('Socket.IO error:', error);
+});
 
 export default function Home() {
 	return (
@@ -40,6 +50,7 @@ export default function Home() {
 								<Stack className="gap-16" alignItems="start">
 									{Object.entries(CARS).map(([value, name]) => (
 										<Carcontroller
+											key={name}
 											socket={socket}
 											value={value as CarType}
 											name={name}

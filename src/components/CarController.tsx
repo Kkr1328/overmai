@@ -28,7 +28,10 @@ export default function CarController(props: CarControllerProps) {
 
 	const handleIsEnableChange = (isCurrentEnable: boolean) => {
 		setIsEnable(isCurrentEnable);
-		props.socket.emit(props.name, { isEnable: isEnable, changeLane: null });
+		props.socket.emit(props.name + '_receive', {
+			isEnable: isEnable,
+			changeLane: null,
+		});
 	};
 
 	// const handleLaneChange = (currentLane: LaneType) => {
@@ -81,7 +84,7 @@ export default function CarController(props: CarControllerProps) {
 			<ButtonGroup variant="outlined" aria-label="outlined button group">
 				<Button
 					onClick={() =>
-						props.socket.emit(props.name, {
+						props.socket.emit(props.name + '_receive', {
 							isEnable: isEnable,
 							changeLane: 'Left',
 						})
@@ -91,7 +94,7 @@ export default function CarController(props: CarControllerProps) {
 				</Button>
 				<Button
 					onClick={() =>
-						props.socket.emit(props.name, {
+						props.socket.emit(props.name + '_receive', {
 							isEnable: isEnable,
 							changeLane: 'Right',
 						})

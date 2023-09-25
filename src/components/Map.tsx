@@ -113,7 +113,7 @@ export default function Map(props: MapProps) {
 						transform: `rotate(${position(1).degree}deg)`,
 					}}
 					className="z-90 absolute"
-					src="/CAR1.svg"
+					src="/red.svg"
 					alt="car1"
 					width={LENGTH.CAR_WIDTH}
 					height={LENGTH.CAR_HEIGHT}
@@ -124,7 +124,7 @@ export default function Map(props: MapProps) {
 						transform: `rotate(${position(2).degree}deg)`,
 					}}
 					className="z-90 absolute"
-					src="/CAR2.svg"
+					src="/blue.svg"
 					alt="car2"
 					width={LENGTH.CAR_WIDTH}
 					height={LENGTH.CAR_HEIGHT}
@@ -135,7 +135,7 @@ export default function Map(props: MapProps) {
 						transform: `rotate(${position(3).degree}deg)`,
 					}}
 					className="z-90 absolute"
-					src="/CAR3.svg"
+					src="/green.svg"
 					alt="car3"
 					width={LENGTH.CAR_WIDTH}
 					height={LENGTH.CAR_HEIGHT}
@@ -146,7 +146,7 @@ export default function Map(props: MapProps) {
 						transform: `rotate(${position(4).degree}deg)`,
 					}}
 					className="z-90 absolute"
-					src="/CAR4.svg"
+					src="/black.svg"
 					alt="car4"
 					width={LENGTH.CAR_WIDTH}
 					height={LENGTH.CAR_HEIGHT}

@@ -1,8 +1,8 @@
 export enum CARS {
-	red_recrive = 'Car 1',
-	blue_recrive = 'Car 2',
-	green_recrive = 'Car 3',
-	black_recrive = 'Car 4',
+	red = 'Car 1',
+	blue = 'Car 2',
+	green = 'Car 3',
+	black = 'Car 4',
 }
 export type CarType = keyof typeof CARS;
 
