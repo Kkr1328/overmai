@@ -3,7 +3,8 @@
 import { LENGTH } from '@/constant/CONST';
 import { Box, Slider } from '@mui/material';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Socket } from 'socket.io-client';
 
 interface Position {
 	x_pos: number;
@@ -11,11 +12,30 @@ interface Position {
 	degree: number;
 }
 
-export default function Map() {
+interface MapProps {
+	socket: any;
+}
+
+export default function Map(props: MapProps) {
 	const [value, setValue] = React.useState(0);
 	const handleSliderChange = (event: Event, newValue: number | number[]) => {
 		setValue(newValue as number);
 	};
+
+	useEffect(() => {
+		props.socket.on('red_send', (data: any) => {
+			console.log(data);
+		});
+		props.socket.on('blue_send', (data: any) => {
+			console.log(data);
+		});
+		props.socket.on('green_send', (data: any) => {
+			console.log(data);
+		});
+		props.socket.on('black_send', (data: any) => {
+			console.log(data);
+		});
+	});
 
 	const position = (lane: number): Position => {
 		const radius_length =
