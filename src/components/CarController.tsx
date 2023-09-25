@@ -17,6 +17,7 @@ import { CarType, LaneType } from '@/constant/ENTITY';
 import { LENGTH } from '@/constant/CONST';
 
 interface CarControllerProps {
+	socket: any;
 	value: CarType;
 	name: string;
 }
@@ -27,8 +28,7 @@ export default function CarController(props: CarControllerProps) {
 
 	const handleIsEnableChange = (isCurrentEnable: boolean) => {
 		setIsEnable(isCurrentEnable);
-		// console.log(props.name, '| Enable :', isCurrentEnable, ', Lane :', lane);
-		// sent "Turn on/off" API here
+		props.socket.emit(props.name, { isEnable: isEnable, changeLane: null });
 	};
 
 	// const handleLaneChange = (currentLane: LaneType) => {
@@ -53,7 +53,8 @@ export default function CarController(props: CarControllerProps) {
 				<Typography
 					fontWeight="bold"
 					className="text-black"
-					style={{ lineHeight: 2.5 }}>
+					style={{ lineHeight: 2.5 }}
+				>
 					{props.name}
 				</Typography>
 				<FormControlLabel
@@ -78,8 +79,26 @@ export default function CarController(props: CarControllerProps) {
 				))}
 			</ToggleButtonGroup> */}
 			<ButtonGroup variant="outlined" aria-label="outlined button group">
-				<Button>Left</Button>
-				<Button>Right</Button>
+				<Button
+					onClick={() =>
+						props.socket.emit(props.name, {
+							isEnable: isEnable,
+							changeLane: 'Left',
+						})
+					}
+				>
+					Left
+				</Button>
+				<Button
+					onClick={() =>
+						props.socket.emit(props.name, {
+							isEnable: isEnable,
+							changeLane: 'Right',
+						})
+					}
+				>
+					Right
+				</Button>
 			</ButtonGroup>
 		</Stack>
 	);
