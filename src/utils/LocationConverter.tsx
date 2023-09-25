@@ -107,7 +107,7 @@ export default function LocationConverter(props: LocationConverterProps) {
 
 		console.log(lane, position, all_dis[lane - 1]);
 		console.log(position / all_dis[lane - 1]);
-		return position / all_dis[lane - 1];
+		return { dis: position / all_dis[lane - 1], lane: lane };
 	};
 
 	return generateDistance(props.plate, props.number);

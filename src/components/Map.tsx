@@ -1,10 +1,10 @@
 'use client';
 
 import { LENGTH } from '@/constant/CONST';
+import LocationConverter from '@/utils/LocationConverter';
 import { Box, Slider } from '@mui/material';
 import Image from 'next/image';
 import React, { useEffect } from 'react';
-import { Socket } from 'socket.io-client';
 
 interface Position {
 	x_pos: number;
@@ -15,35 +15,50 @@ interface Position {
 interface MapProps {
 	socket: any;
 }
+type CAR = 'red' | 'blue' | 'green' | 'black';
 
 export default function Map(props: MapProps) {
-	const [value, setValue] = React.useState(0);
-	const handleSliderChange = (event: Event, newValue: number | number[]) => {
-		setValue(newValue as number);
-	};
+	const [value, setValue] = React.useState({
+		red: {
+			dis: 0,
+			lane: 1,
+		},
+		blue: {
+			dis: 0,
+			lane: 2,
+		},
+		green: {
+			dis: 0,
+			lane: 3,
+		},
+		black: {
+			dis: 0,
+			lane: 4,
+		},
+	});
 
 	useEffect(() => {
 		props.socket.on('red_send', (data: any) => {
-			console.log(data);
+			setValue({ ...value, red: LocationConverter(data) });
 		});
 		props.socket.on('blue_send', (data: any) => {
-			console.log(data);
+			setValue({ ...value, blue: LocationConverter(data) });
 		});
 		props.socket.on('green_send', (data: any) => {
-			console.log(data);
+			setValue({ ...value, green: LocationConverter(data) });
 		});
 		props.socket.on('black_send', (data: any) => {
-			console.log(data);
+			setValue({ ...value, black: LocationConverter(data) });
 		});
 	});
 
-	const position = (lane: number): Position => {
+	const position = (car: CAR): Position => {
 		const radius_length =
-			(LENGTH.MAP_WIDTH - (9 - 2 * lane) * LENGTH.LANE_WIDTH) / 2;
+			(LENGTH.MAP_WIDTH - (9 - 2 * value[car].lane) * LENGTH.LANE_WIDTH) / 2;
 		const straight_length = LENGTH.MAP_HEIGHT - LENGTH.MAP_WIDTH;
 		const curve_length = Math.PI * radius_length;
 		const distance =
-			(1 - value / 100) * (2 * straight_length + 2 * curve_length);
+			(1 - value[car].dis / 100) * (2 * straight_length + 2 * curve_length);
 		const start_y_pos = (LENGTH.MAP_HEIGHT - LENGTH.CAR_HEIGHT) / 2;
 
 		if (distance < straight_length / 2) {
@@ -91,11 +106,6 @@ export default function Map(props: MapProps) {
 
 	return (
 		<>
-			<Slider
-				value={typeof value === 'number' ? value : 0}
-				onChange={handleSliderChange}
-				aria-labelledby="input-slider"
-			/>
 			<Box className="flex justify-center" height={LENGTH.MAP_HEIGHT}>
 				<Image
 					className="absolute"
@@ -109,8 +119,8 @@ export default function Map(props: MapProps) {
 				/>
 				<Image
 					style={{
-						translate: `${position(1).x_pos}px ${position(1).y_pos}px`,
-						transform: `rotate(${position(1).degree}deg)`,
+						translate: `${position('red').x_pos}px ${position('red').y_pos}px`,
+						transform: `rotate(${position('red').degree}deg)`,
 					}}
 					className="z-90 absolute"
 					src="/red.svg"
@@ -120,8 +130,10 @@ export default function Map(props: MapProps) {
 				/>
 				<Image
 					style={{
-						translate: `${position(2).x_pos}px ${position(2).y_pos}px`,
-						transform: `rotate(${position(2).degree}deg)`,
+						translate: `${position('blue').x_pos}px ${
+							position('blue').y_pos
+						}px`,
+						transform: `rotate(${position('blue').degree}deg)`,
 					}}
 					className="z-90 absolute"
 					src="/blue.svg"
@@ -131,8 +143,10 @@ export default function Map(props: MapProps) {
 				/>
 				<Image
 					style={{
-						translate: `${position(3).x_pos}px ${position(3).y_pos}px`,
-						transform: `rotate(${position(3).degree}deg)`,
+						translate: `${position('green').x_pos}px ${
+							position('green').y_pos
+						}px`,
+						transform: `rotate(${position('green').degree}deg)`,
 					}}
 					className="z-90 absolute"
 					src="/green.svg"
@@ -142,8 +156,10 @@ export default function Map(props: MapProps) {
 				/>
 				<Image
 					style={{
-						translate: `${position(4).x_pos}px ${position(4).y_pos}px`,
-						transform: `rotate(${position(4).degree}deg)`,
+						translate: `${position('black').x_pos}px ${
+							position('black').y_pos
+						}px`,
+						transform: `rotate(${position('black').degree}deg)`,
 					}}
 					className="z-90 absolute"
 					src="/black.svg"
