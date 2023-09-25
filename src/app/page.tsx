@@ -53,7 +53,7 @@ export default function Home() {
 											key={name}
 											socket={socket}
 											value={value as CarType}
-											name={name}
+											name={value}
 										/>
 									))}
 								</Stack>

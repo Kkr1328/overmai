@@ -29,7 +29,7 @@ export default function CarController(props: CarControllerProps) {
 	const handleIsEnableChange = (isCurrentEnable: boolean) => {
 		setIsEnable(isCurrentEnable);
 		props.socket.emit(props.name + '_receive', {
-			isEnable: isEnable,
+			isEnable: isCurrentEnable,
 			changeLane: null,
 		});
 	};
